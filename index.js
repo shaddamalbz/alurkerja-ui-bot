@@ -16,10 +16,6 @@ app.use(express.json());
 app.post('/github-webhook', (req, res) => {
   const { body } = req;
 
-  bot.getUpdates().then((res) => {
-    console.log(res, 'res')
-  })
-
   bot.processUpdate(body)
 
   bot.sendMessage(process.env.TELEGRAM_CHAT_ID, '[UPDATE] ' + body.commits[0].message + ' 🚀 \nurl: ' + body.commits[0].url);
@@ -33,6 +29,6 @@ bot.onText(/\/version/, async(msg) => {
 
 
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+  console.log(`Server listening at ${port}`);
 });
 
