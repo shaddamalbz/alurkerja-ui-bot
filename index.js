@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 require('dotenv').config()
 const TelegramBot = require('node-telegram-bot-api');
 
@@ -8,7 +9,13 @@ const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 // This informs the Telegram servers of the new webhook.
 bot.setWebHook(process.env.GITHUB_WEBHOOK_URL)
 
+// enabling CORS for some specific origins only. 
+let corsOptions = { 
+  origin : ['http://localhost:3000','https://alurkerja-docs.vercel.app/' ], 
+} 
+
 const app = express();
+app.use(cors(corsOptions)); 
 const port = 3000;
 
 app.use(express.json());
