@@ -35,7 +35,7 @@ async function generateExplanation(changedFiles) {
 }
 
 app.get('/api/data', (req ,res) => {
-  res.status(200).send({
+  res.status(200).json({
     "data": {
       "show_as_menu": true,
       "name": "takwim",
@@ -341,7 +341,7 @@ app.get('/api/data', (req ,res) => {
 })
 
 app.get('/api/data/spec', (req, res) => {
-  res.status(200).send({
+  res.status(200).json({
     data:{
 
       "content": [
