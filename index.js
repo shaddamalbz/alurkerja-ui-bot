@@ -11,12 +11,13 @@ bot.setWebHook(process.env.GITHUB_WEBHOOK_URL)
 
 // enabling CORS for some specific origins only. 
 let corsOptions = { 
-  origin : ['http://localhost:3000','https://alurkerja-docs.vercel.app/' ], 
+  origin : ['http://localhost:3000','https://alurkerja-docs.vercel.app' ], 
 } 
 
 const app = express();
+
 app.use(cors(corsOptions)); 
-const port = 3000;
+const port = 3001;
 
 app.use(express.json());
 
@@ -34,7 +35,8 @@ bot.onText(/\/version/, async(msg) => {
   bot.sendMessage(chatId, 'Bot Version 1.0');
 });
 
-app.get('/api/data', (req ,res) => {
+app.get('/api/data/spec', (req ,res) => {
+ 
   res.status(200).send({
     "data": {
       "show_as_menu": true,
@@ -340,205 +342,209 @@ app.get('/api/data', (req ,res) => {
   )
 })
 
-app.get('/api/data/spec', (req, res) => {
+app.get('/api/data', (req, res) => {
+  const limit = req.query?.limit ?? 100
+  const page = req.query?.page ?? 0
+
+  const data = [
+    {
+      "rn": "1",
+      "id": 141,
+      "tarikh_mula": "2023-07-20 00:00:00",
+      "tarikh_akhir": "2023-07-28 00:00:00",
+      "nama_program": "5",
+      "nama_aktiviti": "test",
+      "status": "1",
+      "created_at": "2023-07-21T09:32:14.000000Z",
+      "updated_at": "2023-07-21T09:32:14.000000Z",
+      "created_by": null,
+      "status_selection": {
+        "key": "1",
+        "label": "Aktif"
+      },
+      "program": {
+        "id": 5,
+        "tarikh_buka": "2023-06-29 00:00:00",
+        "tarikh_tutup": "2023-06-30 00:00:00",
+        "status": "0",
+        "jenis_perkhidmatan": "2",
+        "tawaran_program": "2",
+        "created_at": "2023-05-19T00:54:13.000000Z",
+        "updated_at": "2023-05-19T00:54:13.000000Z",
+        "created_by": null,
+        "nama_program": "Cuti Belajar Tanpa Gaji"
+      }
+    },
+    {
+      "rn": "2",
+      "id": 2,
+      "tarikh_mula": "2023-05-27 00:00:00",
+      "tarikh_akhir": "2023-05-30 00:00:00",
+      "nama_program": "2",
+      "nama_aktiviti": "Hadiah Latihan Persekutuan",
+      "status": "0",
+      "created_at": "2023-05-19T02:10:21.000000Z",
+      "updated_at": "2023-05-19T02:10:21.000000Z",
+      "created_by": null,
+      "status_selection": {
+        "key": "0",
+        "label": "Tidak Aktif"
+      },
+      "program": {
+        "id": 2,
+        "tarikh_buka": "2023-08-17 00:00:00",
+        "tarikh_tutup": "2023-08-11 00:00:00",
+        "status": "0",
+        "jenis_perkhidmatan": "1",
+        "tawaran_program": "2",
+        "created_at": "2023-05-17T22:48:15.000000Z",
+        "updated_at": "2023-05-17T22:51:08.000000Z",
+        "created_by": null,
+        "nama_program": "Biasiswa HLP1234"
+      }
+    },
+    {
+      "rn": "3",
+      "id": 61,
+      "tarikh_mula": "2023-06-18 00:00:00",
+      "tarikh_akhir": "2023-06-13 00:00:00",
+      "nama_program": "1",
+      "nama_aktiviti": "Sankhya",
+      "status": "1",
+      "created_at": "2023-06-18T04:57:06.000000Z",
+      "updated_at": "2023-06-18T04:57:06.000000Z",
+      "created_by": null,
+      "status_selection": {
+        "key": "1",
+        "label": "Aktif"
+      },
+      "program": {
+        "id": 1,
+        "tarikh_buka": "2023-05-25 00:00:00",
+        "tarikh_tutup": "2023-05-31 00:00:00",
+        "status": "1",
+        "jenis_perkhidmatan": "2",
+        "tawaran_program": "2",
+        "created_at": "2023-05-17T06:39:03.000000Z",
+        "updated_at": "2023-07-09T08:28:20.000000Z",
+        "created_by": null,
+        "nama_program": "Biasiswa Programs"
+      }
+    },
+    {
+      "rn": "4",
+      "id": 62,
+      "tarikh_mula": "2023-06-18 00:00:00",
+      "tarikh_akhir": "2023-06-18 00:00:00",
+      "nama_program": "1",
+      "nama_aktiviti": "Sankhya",
+      "status": "0",
+      "created_at": "2023-06-18T05:08:23.000000Z",
+      "updated_at": "2023-06-18T05:08:23.000000Z",
+      "created_by": null,
+      "status_selection": {
+        "key": "0",
+        "label": "Tidak Aktif"
+      },
+      "program": {
+        "id": 1,
+        "tarikh_buka": "2023-05-25 00:00:00",
+        "tarikh_tutup": "2023-05-31 00:00:00",
+        "status": "1",
+        "jenis_perkhidmatan": "2",
+        "tawaran_program": "2",
+        "created_at": "2023-05-17T06:39:03.000000Z",
+        "updated_at": "2023-07-09T08:28:20.000000Z",
+        "created_by": null,
+        "nama_program": "Biasiswa Programs"
+      }
+    },
+    {
+      "rn": "5",
+      "id": 63,
+      "tarikh_mula": "2023-06-12 00:00:00",
+      "tarikh_akhir": "2023-06-21 00:00:00",
+      "nama_program": "4",
+      "nama_aktiviti": "Budi",
+      "status": "0",
+      "created_at": "2023-06-18T05:08:43.000000Z",
+      "updated_at": "2023-06-18T05:08:43.000000Z",
+      "created_by": null,
+      "status_selection": {
+        "key": "0",
+        "label": "Tidak Aktif"
+      },
+      "program": {
+        "id": 4,
+        "tarikh_buka": "2023-05-19 00:00:00",
+        "tarikh_tutup": "2023-05-20 00:00:00",
+        "status": "1",
+        "jenis_perkhidmatan": "0",
+        "tawaran_program": "2",
+        "created_at": "2023-05-19T00:50:30.000000Z",
+        "updated_at": "2023-05-19T00:51:03.000000Z",
+        "created_by": null,
+        "nama_program": "Biasiswa ISMP"
+      }
+    },
+    {
+      "rn": "6",
+      "id": 101,
+      "tarikh_mula": "2023-07-09 00:00:00",
+      "tarikh_akhir": "2023-07-09 00:00:00",
+      "nama_program": "22",
+      "nama_aktiviti": "asd",
+      "status": "0",
+      "created_at": "2023-07-09T07:45:33.000000Z",
+      "updated_at": "2023-07-09T07:45:33.000000Z",
+      "created_by": null,
+      "status_selection": {
+        "key": "0",
+        "label": "Tidak Aktif"
+      },
+      "program": {
+        "id": 22,
+        "tarikh_buka": "2023-05-30 00:00:00",
+        "tarikh_tutup": "2023-05-30 00:00:00",
+        "status": "1",
+        "jenis_perkhidmatan": "0",
+        "tawaran_program": "1",
+        "created_at": "2023-05-29T05:50:07.000000Z",
+        "updated_at": "2023-05-29T05:50:07.000000Z",
+        "created_by": null,
+        "nama_program": "Biasiswa Ijazah Sarjana Muda Pendidikan"
+      }
+    },
+    {
+      "rn": "7",
+      "id": 121,
+      "tarikh_mula": "1979-08-28 00:00:00",
+      "tarikh_akhir": "1991-08-11 00:00:00",
+      "nama_program": "1",
+      "nama_aktiviti": "Georgiana Steuber Sr.",
+      "status": "5",
+      "created_at": "2023-07-12T01:13:49.000000Z",
+      "updated_at": "2023-07-12T01:13:49.000000Z",
+      "created_by": null,
+      "status_selection": null,
+      "program": {
+        "id": 1,
+        "tarikh_buka": "2023-05-25 00:00:00",
+        "tarikh_tutup": "2023-05-31 00:00:00",
+        "status": "1",
+        "jenis_perkhidmatan": "2",
+        "tawaran_program": "2",
+        "created_at": "2023-05-17T06:39:03.000000Z",
+        "updated_at": "2023-07-09T08:28:20.000000Z",
+        "created_by": null,
+        "nama_program": "Biasiswa Programs"
+      }
+    }
+  ]
+  
   res.status(200).send({
     data:{
-
-      "content": [
-        {
-          "rn": "1",
-          "id": 141,
-          "tarikh_mula": "2023-07-20 00:00:00",
-          "tarikh_akhir": "2023-07-28 00:00:00",
-          "nama_program": "5",
-          "nama_aktiviti": "test",
-          "status": "1",
-          "created_at": "2023-07-21T09:32:14.000000Z",
-          "updated_at": "2023-07-21T09:32:14.000000Z",
-          "created_by": null,
-          "status_selection": {
-            "key": "1",
-            "label": "Aktif"
-          },
-          "program": {
-            "id": 5,
-            "tarikh_buka": "2023-06-29 00:00:00",
-            "tarikh_tutup": "2023-06-30 00:00:00",
-            "status": "0",
-            "jenis_perkhidmatan": "2",
-            "tawaran_program": "2",
-            "created_at": "2023-05-19T00:54:13.000000Z",
-            "updated_at": "2023-05-19T00:54:13.000000Z",
-            "created_by": null,
-            "nama_program": "Cuti Belajar Tanpa Gaji"
-          }
-        },
-        {
-          "rn": "2",
-          "id": 2,
-          "tarikh_mula": "2023-05-27 00:00:00",
-          "tarikh_akhir": "2023-05-30 00:00:00",
-          "nama_program": "2",
-          "nama_aktiviti": "Hadiah Latihan Persekutuan",
-          "status": "0",
-          "created_at": "2023-05-19T02:10:21.000000Z",
-          "updated_at": "2023-05-19T02:10:21.000000Z",
-          "created_by": null,
-          "status_selection": {
-            "key": "0",
-            "label": "Tidak Aktif"
-          },
-          "program": {
-            "id": 2,
-            "tarikh_buka": "2023-08-17 00:00:00",
-            "tarikh_tutup": "2023-08-11 00:00:00",
-            "status": "0",
-            "jenis_perkhidmatan": "1",
-            "tawaran_program": "2",
-            "created_at": "2023-05-17T22:48:15.000000Z",
-            "updated_at": "2023-05-17T22:51:08.000000Z",
-            "created_by": null,
-            "nama_program": "Biasiswa HLP1234"
-          }
-        },
-        {
-          "rn": "3",
-          "id": 61,
-          "tarikh_mula": "2023-06-18 00:00:00",
-          "tarikh_akhir": "2023-06-13 00:00:00",
-          "nama_program": "1",
-          "nama_aktiviti": "Sankhya",
-          "status": "1",
-          "created_at": "2023-06-18T04:57:06.000000Z",
-          "updated_at": "2023-06-18T04:57:06.000000Z",
-          "created_by": null,
-          "status_selection": {
-            "key": "1",
-            "label": "Aktif"
-          },
-          "program": {
-            "id": 1,
-            "tarikh_buka": "2023-05-25 00:00:00",
-            "tarikh_tutup": "2023-05-31 00:00:00",
-            "status": "1",
-            "jenis_perkhidmatan": "2",
-            "tawaran_program": "2",
-            "created_at": "2023-05-17T06:39:03.000000Z",
-            "updated_at": "2023-07-09T08:28:20.000000Z",
-            "created_by": null,
-            "nama_program": "Biasiswa Programs"
-          }
-        },
-        {
-          "rn": "4",
-          "id": 62,
-          "tarikh_mula": "2023-06-18 00:00:00",
-          "tarikh_akhir": "2023-06-18 00:00:00",
-          "nama_program": "1",
-          "nama_aktiviti": "Sankhya",
-          "status": "0",
-          "created_at": "2023-06-18T05:08:23.000000Z",
-          "updated_at": "2023-06-18T05:08:23.000000Z",
-          "created_by": null,
-          "status_selection": {
-            "key": "0",
-            "label": "Tidak Aktif"
-          },
-          "program": {
-            "id": 1,
-            "tarikh_buka": "2023-05-25 00:00:00",
-            "tarikh_tutup": "2023-05-31 00:00:00",
-            "status": "1",
-            "jenis_perkhidmatan": "2",
-            "tawaran_program": "2",
-            "created_at": "2023-05-17T06:39:03.000000Z",
-            "updated_at": "2023-07-09T08:28:20.000000Z",
-            "created_by": null,
-            "nama_program": "Biasiswa Programs"
-          }
-        },
-        {
-          "rn": "5",
-          "id": 63,
-          "tarikh_mula": "2023-06-12 00:00:00",
-          "tarikh_akhir": "2023-06-21 00:00:00",
-          "nama_program": "4",
-          "nama_aktiviti": "Budi",
-          "status": "0",
-          "created_at": "2023-06-18T05:08:43.000000Z",
-          "updated_at": "2023-06-18T05:08:43.000000Z",
-          "created_by": null,
-          "status_selection": {
-            "key": "0",
-            "label": "Tidak Aktif"
-          },
-          "program": {
-            "id": 4,
-            "tarikh_buka": "2023-05-19 00:00:00",
-            "tarikh_tutup": "2023-05-20 00:00:00",
-            "status": "1",
-            "jenis_perkhidmatan": "0",
-            "tawaran_program": "2",
-            "created_at": "2023-05-19T00:50:30.000000Z",
-            "updated_at": "2023-05-19T00:51:03.000000Z",
-            "created_by": null,
-            "nama_program": "Biasiswa ISMP"
-          }
-        },
-        {
-          "rn": "6",
-          "id": 101,
-          "tarikh_mula": "2023-07-09 00:00:00",
-          "tarikh_akhir": "2023-07-09 00:00:00",
-          "nama_program": "22",
-          "nama_aktiviti": "asd",
-          "status": "0",
-          "created_at": "2023-07-09T07:45:33.000000Z",
-          "updated_at": "2023-07-09T07:45:33.000000Z",
-          "created_by": null,
-          "status_selection": {
-            "key": "0",
-            "label": "Tidak Aktif"
-          },
-          "program": {
-            "id": 22,
-            "tarikh_buka": "2023-05-30 00:00:00",
-            "tarikh_tutup": "2023-05-30 00:00:00",
-            "status": "1",
-            "jenis_perkhidmatan": "0",
-            "tawaran_program": "1",
-            "created_at": "2023-05-29T05:50:07.000000Z",
-            "updated_at": "2023-05-29T05:50:07.000000Z",
-            "created_by": null,
-            "nama_program": "Biasiswa Ijazah Sarjana Muda Pendidikan"
-          }
-        },
-        {
-          "rn": "7",
-          "id": 121,
-          "tarikh_mula": "1979-08-28 00:00:00",
-          "tarikh_akhir": "1991-08-11 00:00:00",
-          "nama_program": "1",
-          "nama_aktiviti": "Georgiana Steuber Sr.",
-          "status": "5",
-          "created_at": "2023-07-12T01:13:49.000000Z",
-          "updated_at": "2023-07-12T01:13:49.000000Z",
-          "created_by": null,
-          "status_selection": null,
-          "program": {
-            "id": 1,
-            "tarikh_buka": "2023-05-25 00:00:00",
-            "tarikh_tutup": "2023-05-31 00:00:00",
-            "status": "1",
-            "jenis_perkhidmatan": "2",
-            "tawaran_program": "2",
-            "created_at": "2023-05-17T06:39:03.000000Z",
-            "updated_at": "2023-07-09T08:28:20.000000Z",
-            "created_by": null,
-            "nama_program": "Biasiswa Programs"
-          }
-        }
-      ]
+      "content": data
     },
     status: 200,
     message: 'Berhasil mendapatkan data'
