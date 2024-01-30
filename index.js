@@ -10,13 +10,10 @@ const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 bot.setWebHook(process.env.GITHUB_WEBHOOK_URL)
 
 // enabling CORS for some specific origins only. 
-let corsOptions = { 
-  origin : ['http://localhost:3000','https://alurkerja-docs.vercel.app' ], 
-} 
 
 const app = express();
 
-app.use(cors(corsOptions)); 
+app.use(cors()); 
 const port = 3001;
 
 app.use(express.json());
@@ -36,7 +33,8 @@ bot.onText(/\/version/, async(msg) => {
 });
 
 app.get('/api/data/spec', (req ,res) => {
- 
+
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.status(200).send({
     "data": {
       "show_as_menu": true,
@@ -541,7 +539,7 @@ app.get('/api/data', (req, res) => {
       }
     }
   ]
-  
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.status(200).send({
     data:{
       "content": data
